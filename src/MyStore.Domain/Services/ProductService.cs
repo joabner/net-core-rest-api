@@ -17,7 +17,8 @@ namespace MyStore.Domain.Services
 
         public async Task Create(Product product)
         {
-            if (!Validate(new ProductValidation(), product)) return;
+            var productIsInvalid = !Validate(new ProductValidation(), product);
+            if (productIsInvalid) return;
 
             await _productRepository.Add(product);
         }
@@ -29,6 +30,9 @@ namespace MyStore.Domain.Services
 
         public async Task Update(Product product)
         {
+            var productIsInvalid = !Validate(new ProductValidation(), product);
+            if (productIsInvalid) return;
+
             await _productRepository.Update(product);
         }
     }
